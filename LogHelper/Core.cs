@@ -6,9 +6,9 @@ namespace LogHelper
 {
     public class Core
     {
-        private WPF _adapter;
-        private DataContainer _dataContainer;
-        private ReaderFactory _factory;
+        private readonly WPF _adapter;
+        private readonly DataContainer _dataContainer;
+        private readonly ReaderFactory _factory;
 
         public Core()
         {
