@@ -41,7 +41,7 @@ namespace LogHelper
                         answer.Add(new LogElement(DateTime.Parse(t.Groups[1].Value), t.Groups[2].Value, t.Groups[3].Value));
                     }
                     catch (Exception ex) {
-                        ;
+                        Logger.Log(ex.Message);
                     }
                 }
 
