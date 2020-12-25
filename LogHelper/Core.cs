@@ -20,7 +20,7 @@ namespace LogHelper
             Logger.Log("Core done");
         }
 
-        public void Init(MainWindow window)
+        public void Init(StartWindow window)
         {
             Logger.Log("Core.Init start");
             _adapter.Init(window);

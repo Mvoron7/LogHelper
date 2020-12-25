@@ -6,4 +6,12 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="3PYN-SfKfqs.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="3PYN-SfKfqs.jpg" />
+  </ItemGroup>
+
 </Project>

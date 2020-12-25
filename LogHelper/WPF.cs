@@ -9,12 +9,12 @@ namespace LogHelper
 {
     public class WPF
     {
-        public MainWindow _window;
+        public StartWindow _window;
         private ICommand _openCommand;
 
         public WPF(){ }
 
-        public void Init(MainWindow window)
+        public void Init(StartWindow window)
         {
             _window = window;
             _openCommand = new OpenCommand();

@@ -1,7 +1,5 @@
-﻿using Microsoft.Win32;
-using System.Collections.Generic;
+﻿using System.Threading;
 using System.Windows;
-using System.Windows.Controls;
 
 namespace LogHelper
 {
@@ -10,20 +8,23 @@ namespace LogHelper
     /// </summary>
     public partial class MainWindow : Window
     {
-        private readonly Core _core;
-
         public MainWindow()
         {
             InitializeComponent();
-
-            _core = new Core();
-            _core.Init(this);
         }
 
-        internal void MenuItem_Click(object sender, RoutedEventArgs e)
+        private void Window_Loaded(object sender, System.EventArgs e)
         {
-            MenuItem a = sender as MenuItem;
-            _core.StartReader(a.CommandParameter as string);
+            new Thread(new ThreadStart(() => {
+                Core _core = new Core();
+
+                Dispatcher.Invoke(() => {
+                    StartWindow _startWindow = new StartWindow(_core);
+                    Hide();
+                    _startWindow.Show();
+                    Close();
+                });
+            })).Start();
         }
     }
 }
