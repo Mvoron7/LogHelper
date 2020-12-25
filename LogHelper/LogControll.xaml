@@ -1,0 +1,19 @@
+﻿<UserControl x:Class="LogHelper.LogControll"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:LogHelper"
+             mc:Ignorable="d" 
+             d:DesignHeight="25" d:DesignWidth="200">
+    <StackPanel Orientation="Horizontal">
+        <CheckBox x:Name="isEnable" RenderTransformOrigin="0.0,0.0" HorizontalAlignment="Left" VerticalAlignment="Top" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked">
+            <CheckBox.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform ScaleX="1.6" ScaleY="1.6"/>
+                </TransformGroup>
+            </CheckBox.RenderTransform>
+        </CheckBox>
+        <Label x:Name="Text" Margin="10,0,0,0" FontFamily="Consolas" Content="Debug Text Example" VerticalAlignment="Stretch" Height="25" HorizontalAlignment="Stretch"/>
+    </StackPanel>
+</UserControl>

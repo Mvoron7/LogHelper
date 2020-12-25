@@ -18,10 +18,28 @@
             <RowDefinition/>
             <RowDefinition Height="0"/>
         </Grid.RowDefinitions>
-        <Menu Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2">
+        <Menu x:Name="Menu" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2">
             <MenuItem x:Name="LogTypes" Header="Открыть">
                 <MenuItem Header="ghdf" Click="MenuItem_Click" CommandParameter="File"/>
             </MenuItem>
         </Menu>
+        <DataGrid x:Name="LogList" Grid.Row="1" Grid.Column="0" ItemsSource="{Binding}" AutoGenerateColumns="False"
+                  CanUserAddRows="False" CanUserDeleteRows="False" SelectionMode="Single">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Дата" Binding="{Binding Path=Date}" FontFamily="Consolas" Width="160"/>
+                <DataGridTextColumn Header="Модуль" Binding="{Binding Path=Tag}" FontFamily="Consolas"/>
+                <DataGridTextColumn Header="Сообщение" Binding="{Binding Path=Message}" FontFamily="Consolas" Width="*"/>
+            </DataGrid.Columns>
+            <DataGrid.RowDetailsTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Path=Message}" FontFamily="Consolas" FontSize="14"/>
+                </DataTemplate>
+            </DataGrid.RowDetailsTemplate>
+        </DataGrid>
+        <TabControl Grid.Column="1" Grid.Row="1">
+            <TabItem Header="StackPanel">
+                <StackPanel x:Name="AllElement"/>
+            </TabItem>
+        </TabControl>
     </Grid>
 </Window>

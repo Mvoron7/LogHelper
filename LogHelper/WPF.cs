@@ -1,5 +1,6 @@
 ﻿using Microsoft.Win32;
 using System;
+using System.Collections.Generic;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
@@ -57,6 +58,15 @@ namespace LogHelper
                     menuItem.Click += _window.MenuItem_Click;
                     _window.LogTypes.Items.Add(menuItem);
                 }
+            });
+        }
+
+        internal void BindData(List<LogElement> items)
+        {
+            DoInvoke(() =>
+            {
+                _window.LogList.ItemsSource = items;
+                items.ForEach(i => { _window.AllElement.Children.Add(new LogControll(i.Tag, items, new Action<bool>(b => { }))); });
             });
         }
 

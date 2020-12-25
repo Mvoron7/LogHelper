@@ -22,7 +22,7 @@ namespace LogHelper
 
         internal void MenuItem_Click(object sender, RoutedEventArgs e)
         {
-            var a = sender as MenuItem;
+            MenuItem a = sender as MenuItem;
             _core.StartReader(a.CommandParameter as string);
         }
     }
