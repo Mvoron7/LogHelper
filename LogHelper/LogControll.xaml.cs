@@ -11,9 +11,9 @@ namespace LogHelper
     {
 
         private readonly IEnumerable<LogElement> _elements;
-        private Action<bool> _bindCommand;
+        private Action<IEnumerable<LogElement>, bool> _bindCommand;
 
-        public LogControll(string message, IEnumerable<LogElement> elements, Action<bool> action)
+        public LogControll(string message, IEnumerable<LogElement> elements, Action<IEnumerable<LogElement>, bool> action)
         {
             InitializeComponent();
 
@@ -22,8 +22,8 @@ namespace LogHelper
             _bindCommand = action;
         }
 
-        private void CheckBox_Checked(object sender, System.Windows.RoutedEventArgs e) => _bindCommand?.Invoke(true);
+        private void CheckBox_Checked(object sender, System.Windows.RoutedEventArgs e) => _bindCommand?.Invoke(_elements, true);
 
-        private void CheckBox_Unchecked(object sender, System.Windows.RoutedEventArgs e) => _bindCommand?.Invoke(false);
+        private void CheckBox_Unchecked(object sender, System.Windows.RoutedEventArgs e) => _bindCommand?.Invoke(_elements, false);
     }
 }

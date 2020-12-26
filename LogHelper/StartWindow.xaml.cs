@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 
 namespace LogHelper
 {
@@ -23,5 +24,14 @@ namespace LogHelper
             MenuItem a = sender as MenuItem;
             _core.StartReader(a.CommandParameter as string);
         }
+
+        #region Filters&Converters
+        private void CollectionViewSource_Filter(object sender, FilterEventArgs e)
+        {
+            LogElement element = e.Item as LogElement;
+            if (element != null)
+                e.Accepted = element.Visible;
+        }
+        #endregion
     }
 }

@@ -8,6 +8,12 @@
         Title="LogHelper"
         WindowState="Maximized"
         Height="450" Width="800">
+    <Window.Resources>
+        <local:DateStringConverter x:Key="dateConverter"/>
+        <local:Logs x:Key="Logs"/>
+        <CollectionViewSource x:Key="cvsLogs" Source="{StaticResource Logs}" 
+                              Filter="CollectionViewSource_Filter"/>
+    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -19,14 +25,14 @@
             <RowDefinition Height="0"/>
         </Grid.RowDefinitions>
         <Menu x:Name="Menu" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2">
-            <MenuItem x:Name="LogTypes" Header="Открыть">
-                <MenuItem Header="ghdf" Click="MenuItem_Click" CommandParameter="File"/>
-            </MenuItem>
+            <MenuItem x:Name="LogTypes" Header="Открыть"/>
         </Menu>
-        <DataGrid x:Name="LogList" Grid.Row="1" Grid.Column="0" ItemsSource="{Binding}" AutoGenerateColumns="False" IsReadOnly="True"
+        <DataGrid x:Name="LogList" Grid.Row="1" Grid.Column="0" 
+                  ItemsSource="{Binding Source={StaticResource cvsLogs}}"
+                  AutoGenerateColumns="False" IsReadOnly="True"
                   CanUserAddRows="False" CanUserDeleteRows="False" SelectionMode="Single">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Дата" Binding="{Binding Path=Date}" FontFamily="Consolas" Width="160"/>
+                <DataGridTextColumn Header="Дата" Binding="{Binding Path=Date, Converter={StaticResource dateConverter}}" FontFamily="Consolas" Width="160"/>
                 <DataGridTextColumn Header="Модуль" Binding="{Binding Path=Tag}" FontFamily="Consolas"/>
                 <DataGridTextColumn Header="Сообщение" Binding="{Binding Path=Message}" FontFamily="Consolas" Width="*"/>
             </DataGrid.Columns>
@@ -37,7 +43,7 @@
             </DataGrid.RowDetailsTemplate>
         </DataGrid>
         <TabControl Grid.Column="1" Grid.Row="1">
-            <TabItem Header="StackPanel">
+            <TabItem Header="All">
                 <StackPanel x:Name="AllElement"/>
             </TabItem>
         </TabControl>
