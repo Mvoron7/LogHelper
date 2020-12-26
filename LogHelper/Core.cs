@@ -28,7 +28,6 @@ namespace LogHelper
             ReaderDescription[] descriptions = _factory.GetDescriptions();
             _adapter.SetAvailableReaders(descriptions);
 
-            BindData();
             Logger.Log("Core.Init done");
         }
 
@@ -58,9 +57,10 @@ namespace LogHelper
             {
                 IEnumerable<LogElement> toAdd = reader.Open(file);
                 _dataContainer.Add(toAdd);
+                BindData();
                 Logger.Log($"Core.StartFileReader done");
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 Logger.Log(ex.Message);
             }
@@ -69,11 +69,7 @@ namespace LogHelper
         private void BindData()
         {
             Logger.Log($"Core.BindData start");
-            _adapter.BindData(new List<LogElement>()
-            {
-                new LogElement(DateTime.Now, "Tag_1", "Message_1"),
-                new LogElement(DateTime.Now, "Tag_2", "Message_2"),
-            });
+            _adapter.BindData(_dataContainer);
             Logger.Log($"Core.BindData done");
         }
     }

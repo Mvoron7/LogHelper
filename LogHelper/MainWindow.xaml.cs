@@ -1,5 +1,4 @@
-﻿using System.Threading;
-using System.Windows;
+﻿using System.Windows;
 
 namespace LogHelper
 {
@@ -15,16 +14,11 @@ namespace LogHelper
 
         private void Window_Loaded(object sender, System.EventArgs e)
         {
-            new Thread(new ThreadStart(() => {
-                Core _core = new Core();
-
-                Dispatcher.Invoke(() => {
-                    StartWindow _startWindow = new StartWindow(_core);
-                    Hide();
-                    _startWindow.Show();
-                    Close();
-                });
-            })).Start();
+            Core _core = new Core();
+            StartWindow _startWindow = new StartWindow(_core);
+            Hide();
+            _startWindow.Show();
+            Close();
         }
     }
 }

@@ -24,28 +24,33 @@ namespace LogHelper
 
         public IEnumerable<LogElement> Open(string target)
         {
-            var answer = new List<LogElement>();
+            Logger.Log($"FileReader.Open start");
+#if DEBUG
+            target = @"i:\Projects\LogHelper\Test.log";
+#endif
+            List<LogElement> answer = new List<LogElement>();
             using (StreamReader stream = new StreamReader(target))
             {
                 string file = stream.ReadToEnd();
-#if DEBUG
-                file = "<date=\"2020-01-01 00:00:00.0000\" Tag = \"ClassName\" Message=\"MessageBody\"><date=\"2020-01-01 00:00:00.0000\" Tag = \"ClassName\" Message=\"MessageBody\"><date=\"2020-01-01 00:00:00.0000\" Tag = \"ClassName\" Message=\"MessageBody\">";
-#endif
+                Logger.Log($"FileReader.Open file loaded");
 
                 Regex regex = new Regex(_pattern, RegexOptions.Compiled);
                 MatchCollection matches = regex.Matches(file);
+                Logger.Log($"FileReader.Open regex done");
                 foreach (Match t in matches)
                 {
                     try
                     {
                         answer.Add(new LogElement(DateTime.Parse(t.Groups[1].Value), t.Groups[2].Value, t.Groups[3].Value));
                     }
-                    catch (Exception ex) {
+                    catch (Exception ex)
+                    {
                         Logger.Log(ex.Message);
                     }
                 }
-
             }
+
+            Logger.Log($"FileReader.Open done");
             return answer;
         }
 

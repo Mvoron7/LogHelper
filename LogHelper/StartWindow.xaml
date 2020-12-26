@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LogHelper"
         mc:Ignorable="d"
-        Title="MainWindow"
+        Title="LogHelper"
         WindowState="Maximized"
         Height="450" Width="800">
     <Grid>
@@ -23,7 +23,7 @@
                 <MenuItem Header="ghdf" Click="MenuItem_Click" CommandParameter="File"/>
             </MenuItem>
         </Menu>
-        <DataGrid x:Name="LogList" Grid.Row="1" Grid.Column="0" ItemsSource="{Binding}" AutoGenerateColumns="False"
+        <DataGrid x:Name="LogList" Grid.Row="1" Grid.Column="0" ItemsSource="{Binding}" AutoGenerateColumns="False" IsReadOnly="True"
                   CanUserAddRows="False" CanUserDeleteRows="False" SelectionMode="Single">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Дата" Binding="{Binding Path=Date}" FontFamily="Consolas" Width="160"/>

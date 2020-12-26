@@ -7,7 +7,9 @@
              mc:Ignorable="d" 
              d:DesignHeight="25" d:DesignWidth="200">
     <StackPanel Orientation="Horizontal">
-        <CheckBox x:Name="isEnable" RenderTransformOrigin="0.0,0.0" HorizontalAlignment="Left" VerticalAlignment="Top" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked">
+        <CheckBox x:Name="isEnable" RenderTransformOrigin="0.0,0.0"
+                  HorizontalAlignment="Left" VerticalAlignment="Top"
+                  Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked">
             <CheckBox.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform ScaleX="1.6" ScaleY="1.6"/>

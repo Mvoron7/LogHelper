@@ -15,9 +15,9 @@ namespace LogHelper
 
         internal ReaderDescription[] GetDescriptions()
         {
-            var descriptions = new ReaderDescription[projects.Count];
+            ReaderDescription[] descriptions = new ReaderDescription[projects.Count];
             int i = 0;
-            foreach(KeyValuePair<string, Director> progect in projects)
+            foreach (KeyValuePair<string, Director> progect in projects)
                 descriptions[i++] = new ReaderDescription() { Key = progect.Key, Label = progect.Value.ToString() };
 
             return descriptions;
@@ -43,9 +43,9 @@ namespace LogHelper
 
         private Dictionary<string, Director> GetProjects()
         {
-            var projects = new Dictionary<string, Director>();
+            Dictionary<string, Director> projects = new Dictionary<string, Director>();
 
-            projects.Add("Test", new FileDirector("Тестовый"));
+            projects.Add("File", new FileDirector("Тестовый"));
 
             return projects;
         }

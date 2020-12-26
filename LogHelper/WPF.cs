@@ -12,7 +12,7 @@ namespace LogHelper
         public StartWindow _window;
         private ICommand _openCommand;
 
-        public WPF(){ }
+        public WPF() { }
 
         public void Init(StartWindow window)
         {
@@ -61,12 +61,17 @@ namespace LogHelper
             });
         }
 
-        internal void BindData(List<LogElement> items)
+        internal void BindData(DataContainer collection)
         {
             DoInvoke(() =>
             {
-                _window.LogList.ItemsSource = items;
-                items.ForEach(i => { _window.AllElement.Children.Add(new LogControll(i.Tag, items, new Action<bool>(b => { }))); });
+                if (_window.LogList.ItemsSource == null)
+                    _window.LogList.ItemsSource = collection.AllElements;
+                _window.LogList.Items.Refresh();
+
+                _window.AllElement.Children.Clear();
+                foreach (KeyValuePair<string, List<LogElement>> module in collection.Module)
+                    _window.AllElement.Children.Add(new LogControll(module.Key, module.Value, new Action<bool>(b => { })));
             });
         }
 

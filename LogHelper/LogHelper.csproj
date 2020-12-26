@@ -4,6 +4,7 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,6 +13,12 @@
 
   <ItemGroup>
     <Resource Include="3PYN-SfKfqs.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="icon.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

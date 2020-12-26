@@ -10,20 +10,20 @@ namespace LogHelper
     public partial class LogControll : UserControl
     {
 
-        public readonly List<LogElement> Elements;
+        private readonly IEnumerable<LogElement> _elements;
         private Action<bool> _bindCommand;
 
-        public LogControll(string message, List<LogElement> elements, Action<bool> action)
+        public LogControll(string message, IEnumerable<LogElement> elements, Action<bool> action)
         {
             InitializeComponent();
 
             Text.Content = message;
-            Elements = elements;
+            _elements = elements;
             _bindCommand = action;
         }
 
-        private void CheckBox_Checked(object sender, System.Windows.RoutedEventArgs e) => _bindCommand(true);
+        private void CheckBox_Checked(object sender, System.Windows.RoutedEventArgs e) => _bindCommand?.Invoke(true);
 
-        private void CheckBox_Unchecked(object sender, System.Windows.RoutedEventArgs e) => _bindCommand(false);
+        private void CheckBox_Unchecked(object sender, System.Windows.RoutedEventArgs e) => _bindCommand?.Invoke(false);
     }
 }
