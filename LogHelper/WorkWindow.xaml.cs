@@ -8,11 +8,11 @@ namespace LogHelper
     /// <summary>
     /// Логика взаимодействия для StartWindow.xaml
     /// </summary>
-    public partial class StartWindow : Window
+    public partial class WorkWindow : Window
     {
         private ICallBack _callBack;
 
-        public StartWindow()
+        public WorkWindow()
         {
             InitializeComponent();
         }

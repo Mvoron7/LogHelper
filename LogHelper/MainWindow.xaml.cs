@@ -18,14 +18,14 @@ namespace LogHelper
         private void Window_Loaded(object sender, System.EventArgs e)
         {
             // Зависимости 
-            StartWindow startWindow = new StartWindow();
-            WPF adapter = new WPF(startWindow);
+            WorkWindow workWindow = new WorkWindow();
+            WPF adapter = new WPF(workWindow);
             DataContainer dataContainer = new DataContainer();
             Core core = new Core(adapter, dataContainer, directors);
-            startWindow.BindCallBack(core);
+            workWindow.BindCallBack(core);
 
             Hide();
-            startWindow.Show();
+            workWindow.Show();
             Close();
         }
     }
