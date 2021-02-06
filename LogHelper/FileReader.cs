@@ -11,15 +11,9 @@ namespace LogHelper
     {
         private readonly string _pattern;
 
-#if DEBUG
-        public FileReader()
-        {
-            _pattern = "<date[ ]?=[ ]?\"([\\d]{4}-[\\d]{2}-[\\d]{2} [\\d]{2}:[\\d]{2}:[\\d]{2}.[\\d]{4})\"[ ]?Tag[ ]?=[ ]?\"([^\"]*)\"[ ]?Message[ ]?=[ ]?\"([^\"]*)\"[ ]?>";
-#else
         public FileReader(string pattern)
         {
             _pattern = pattern;
-#endif
         }
 
         public IEnumerable<LogElement> Open(string target)

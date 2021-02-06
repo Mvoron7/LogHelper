@@ -10,12 +10,15 @@ namespace LogHelper
         private readonly DataContainer _dataContainer;
         private readonly ReaderFactory _factory;
 
+        // Это строка должна получаться из файла настроек.
+        string[] directors = { "File", "Тестовый", "<date[ ]?=[ ]?\"([\\d]{4}-[\\d]{2}-[\\d]{2} [\\d]{2}:[\\d]{2}:[\\d]{2}.[\\d]{4})\"[ ]?Tag[ ]?=[ ]?\"([^\"]*)\"[ ]?Message[ ]?=[ ]?\"([^\"]*)\"[ ]?>" };
+
         public Core()
         {
             Logger.Log("Core start");
             _adapter = new WPF();
             _dataContainer = new DataContainer();
-            _factory = new ReaderFactory();
+            _factory = new ReaderFactory(directors);
 
             Logger.Log("Core done");
         }

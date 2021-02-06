@@ -4,10 +4,8 @@ namespace LogHelper
 {
     internal class FileDirector : Director
     {
-        public FileDirector(string description)
-        {
-            Description = description;
-        }
+        public FileDirector(string description, string regEx)
+        : base(description, regEx) { }
 
         public override LogType GetReaderType()
         {
