@@ -4,44 +4,35 @@ using System.Collections.Generic;
 
 namespace LogHelper
 {
-    public class Core
+    public class Core : ICallBack
     {
         private readonly WPF _adapter;
         private readonly DataContainer _dataContainer;
         private readonly ReaderFactory _factory;
 
-        // Это строка должна получаться из файла настроек.
-        string[] directors = { "File", "Тестовый", "<date[ ]?=[ ]?\"([\\d]{4}-[\\d]{2}-[\\d]{2} [\\d]{2}:[\\d]{2}:[\\d]{2}.[\\d]{4})\"[ ]?Tag[ ]?=[ ]?\"([^\"]*)\"[ ]?Message[ ]?=[ ]?\"([^\"]*)\"[ ]?>" };
-
-        public Core()
+        public Core(WPF adapter, DataContainer dataContainer, string[] directors)
         {
             Logger.Log("Core start");
-            _adapter = new WPF();
-            _dataContainer = new DataContainer();
+            _adapter = adapter;
+            _dataContainer = dataContainer;
             _factory = new ReaderFactory(directors);
-
-            Logger.Log("Core done");
-        }
-
-        public void Init(StartWindow window)
-        {
-            Logger.Log("Core.Init start");
-            _adapter.Init(window);
 
             ReaderDescription[] descriptions = _factory.GetDescriptions();
             _adapter.SetAvailableReaders(descriptions);
 
-            Logger.Log("Core.Init done");
+            Logger.Log("Core done");
         }
 
+        #region ICallBack
         public void StartReader(string name)
         {
             Logger.Log($"Core.StartReader start {name}");
-            IReader reader = _factory.GetReaderByName(name);
-            switch (reader.GetType())
+
+            Director director = _factory.GetDirectorByName(name);
+            switch (director.Type)
             {
                 case LogType.File:
-                    StartFileReader(reader);
+                    StartFileReader(director as FileDirector);
                     break;
 
                 default:
@@ -49,18 +40,22 @@ namespace LogHelper
             }
             Logger.Log("Core.StartReader done");
         }
+        #endregion
 
-        private void StartFileReader(IReader reader)
+        #region Readers
+        private void StartFileReader(FileDirector director)
         {
             Logger.Log($"Core.StartFileReader start");
-            string file = _adapter.GetFileName("Log File|*.log");
+
+            string file = _adapter.GetFileName(director.Extension);
             //if (!File.Exists(file))
             //    throw new Exception("File not exsist");
+            IReader reader = _factory.BuildReader(director);
             try
             {
                 IEnumerable<LogElement> toAdd = reader.Open(file);
                 _dataContainer.Add(toAdd);
-                BindData();
+                _adapter.BindData(_dataContainer);
                 Logger.Log($"Core.StartFileReader done");
             }
             catch (Exception ex)
@@ -68,12 +63,6 @@ namespace LogHelper
                 Logger.Log(ex.Message);
             }
         }
-
-        private void BindData()
-        {
-            Logger.Log($"Core.BindData start");
-            _adapter.BindData(_dataContainer);
-            Logger.Log($"Core.BindData done");
-        }
+        #endregion
     }
 }

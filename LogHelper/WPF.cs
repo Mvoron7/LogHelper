@@ -15,15 +15,13 @@ namespace LogHelper
         public StartWindow _window;
         private ICommand _openCommand;
 
-        public WPF() { }
-
-        public void Init(StartWindow window)
+        public WPF(StartWindow window)
         {
             _window = window;
             _openCommand = new OpenCommand();
         }
 
-        public string GetFileName(string extension = "")
+        internal string GetFileName(string extension = "")
         {
             OpenFileDialog open = null;
             DoInvoke(() =>

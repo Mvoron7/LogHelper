@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using LogHelper.Abstraction;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 
@@ -9,20 +10,22 @@ namespace LogHelper
     /// </summary>
     public partial class StartWindow : Window
     {
-        private readonly Core _core;
+        private ICallBack _callBack;
 
-        public StartWindow(Core core)
+        public StartWindow()
         {
             InitializeComponent();
+        }
 
-            _core = core;
-            _core.Init(this);
+        public void BindCallBack(ICallBack callBack)
+        {
+            _callBack = callBack;
         }
 
         internal void MenuItem_Click(object sender, RoutedEventArgs e)
         {
             MenuItem a = sender as MenuItem;
-            _core.StartReader(a.CommandParameter as string);
+            _callBack.StartReader(a.CommandParameter as string);
         }
 
         #region Filters&Converters

@@ -6,10 +6,13 @@
 
         public readonly string RegEx;
 
-        protected Director(string description, string regEx)
+        public readonly LogType Type;
+
+        protected Director(string description, string regEx, LogType type)
         {
             Description = description;
             RegEx = regEx;
+            Type = type;
         }
 
         public abstract LogType GetReaderType();

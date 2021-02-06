@@ -8,9 +8,9 @@ namespace LogHelper
     {
         private readonly Dictionary<string, Director> projects;
 
-        public ReaderFactory(string[] rawDirectors)
+        public ReaderFactory(string[] rawDirecrors)
         {
-            projects = GetProjects(rawDirectors);
+            projects = GetProjects(rawDirecrors);
         }
 
         internal ReaderDescription[] GetDescriptions()
@@ -23,42 +23,41 @@ namespace LogHelper
             return descriptions;
         }
 
-        internal IReader GetReaderByName(string name)
+        internal Director GetDirectorByName(string name)
         {
             if (!projects.ContainsKey(name))
                 throw new Exception("Запрошен несушествующий ридер.");
-            IReader reader = (projects[name].GetReaderType()) switch
-            {
-                LogType.File => BuildReader(projects[name]),
-                _ => throw new Exception("Запрошен ридер несуществующего типа"),
-            };
-            return reader;
+            return projects[name];
         }
+
+        #region BuildReaders
+        internal IReader BuildReader(FileDirector director)
+        {
+            return new FileReader(director.RegEx);
+        }
+        #endregion
 
         private Dictionary<string, Director> GetProjects(string[] rawDirectors)
         {
-            var directors = new Dictionary<string, Director>();
+            var direcrors = new Dictionary<string, Director>();
 
             int i = 0;
             while (i < rawDirectors.Length)
             {
                 try
                 {
-                    directors.Add(rawDirectors[i], new FileDirector(rawDirectors[i + 1], rawDirectors[i + 2]));
+                    direcrors.Add(rawDirectors[i], new FileDirector(rawDirectors[i + 1], rawDirectors[i + 2], rawDirectors[i + 3]));
                 }
                 catch (Exception ex)
                 {
                     Logger.Log($"FileReader.GetReaderByName {ex.Message}\n {ex.StackTrace}");
                 }
-                i += 3;
+                i += 4;
             }
 
-            return directors;
+            return direcrors;
         }
 
-        private IReader BuildReader(Director director)
-        {
-            return new FileReader(director.RegEx);
-        }
+        
     }
 }
