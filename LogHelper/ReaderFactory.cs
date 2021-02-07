@@ -1,4 +1,5 @@
 ﻿using LogHelper.Abstraction;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 
@@ -8,9 +9,9 @@ namespace LogHelper
     {
         private readonly Dictionary<string, Director> projects;
 
-        public ReaderFactory(string[] rawDirecrors)
+        public ReaderFactory(IConfigurationSection configuration)
         {
-            projects = GetProjects(rawDirecrors);
+            projects = GetProjects(configuration);
         }
 
         internal ReaderDescription[] GetDescriptions()
@@ -37,27 +38,27 @@ namespace LogHelper
         }
         #endregion
 
-        private Dictionary<string, Director> GetProjects(string[] rawDirectors)
+        private Dictionary<string, Director> GetProjects(IConfigurationSection configuration)
         {
             var direcrors = new Dictionary<string, Director>();
 
-            int i = 0;
-            while (i < rawDirectors.Length)
+            foreach (var part in configuration.GetChildren())
             {
                 try
                 {
-                    direcrors.Add(rawDirectors[i], new FileDirector(rawDirectors[i + 1], rawDirectors[i + 2], rawDirectors[i + 3]));
+                    switch (part.GetSection("type").Value)
+                    {
+                        case "File":
+                            direcrors.Add(part.GetSection("id").Value, new FileDirector(part.GetSection("description").Value, part.GetSection("regEx").Value, part.GetSection("extension").Value));
+                            break;
+                    }
                 }
                 catch (Exception ex)
                 {
                     Logger.Log($"FileReader.GetReaderByName {ex.Message}\n {ex.StackTrace}");
                 }
-                i += 4;
             }
-
             return direcrors;
         }
-
-        
     }
 }

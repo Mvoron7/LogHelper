@@ -15,6 +15,8 @@
             Type = type;
         }
 
+        /// <summary>Получает тип лога</summary>
+        /// <returns>Тип лога</returns>
         public abstract LogType GetReaderType();
 
         public override string ToString()

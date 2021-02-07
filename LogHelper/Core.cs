@@ -10,12 +10,12 @@ namespace LogHelper
         private readonly DataContainer _dataContainer;
         private readonly ReaderFactory _factory;
 
-        public Core(WPF adapter, DataContainer dataContainer, string[] directors)
+        internal Core(WPF adapter, DataContainer dataContainer, ReaderFactory factory)
         {
             Logger.Log("Core start");
             _adapter = adapter;
             _dataContainer = dataContainer;
-            _factory = new ReaderFactory(directors);
+            _factory = factory;
 
             ReaderDescription[] descriptions = _factory.GetDescriptions();
             _adapter.SetAvailableReaders(descriptions);

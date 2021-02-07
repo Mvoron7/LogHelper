@@ -47,10 +47,5 @@ namespace LogHelper
             Logger.Log($"FileReader.Open done");
             return answer;
         }
-
-        LogType IReader.GetType()
-        {
-            return LogType.File;
-        }
     }
 }

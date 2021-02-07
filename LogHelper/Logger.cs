@@ -18,5 +18,11 @@ namespace LogHelper
             string s = $"{getData()} {log}";
             writer.WriteLine(s);
         }
+
+        public static void Log(Exception ex, string log= "")
+        {
+            string s = $"{getData()} {log} {ex.Message} {ex.StackTrace}";
+            writer.WriteLine(s);
+        }
     }
 }

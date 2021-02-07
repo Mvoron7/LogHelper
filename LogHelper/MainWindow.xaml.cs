@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using Microsoft.Extensions.Configuration;
+using System;
+using System.Windows;
 
 namespace LogHelper
 {
@@ -7,26 +9,41 @@ namespace LogHelper
     /// </summary>
     public partial class MainWindow : Window
     {
-        // Эти строки должны получаться из файла настроек как объект .
-        private readonly string[] directors = { "File", "Тестовый", "<date[ ]?=[ ]?\"([\\d]{4}-[\\d]{2}-[\\d]{2} [\\d]{2}:[\\d]{2}:[\\d]{2}.[\\d]{4})\"[ ]?Tag[ ]?=[ ]?\"([^\"]*)\"[ ]?Message[ ]?=[ ]?\"([^\"]*)\"[ ]?>", "Log File|*.log" };
-
         public MainWindow()
         {
             InitializeComponent();
         }
 
-        private void Window_Loaded(object sender, System.EventArgs e)
+        private void Window_Loaded(object sender, EventArgs e)
         {
-            // Зависимости 
-            WorkWindow workWindow = new WorkWindow();
-            WPF adapter = new WPF(workWindow);
-            DataContainer dataContainer = new DataContainer();
-            Core core = new Core(adapter, dataContainer, directors);
-            workWindow.BindCallBack(core);
+            try
+            {
+                // Зависимости
+                IConfiguration configuration = Conficurated();
+                WorkWindow workWindow = new WorkWindow();
+                WPF adapter = new WPF(workWindow);
+                DataContainer dataContainer = new DataContainer();
+                ReaderFactory factory = new ReaderFactory(configuration.GetSection("Readers"));
+                Core core = new Core(adapter, dataContainer, factory);
+                workWindow.BindCallBack(core);
 
-            Hide();
-            workWindow.Show();
+                Hide();
+                workWindow.Show();
+
+            }
+            catch (Exception ex)
+            {
+                Logger.Log(ex, "");
+            }
             Close();
+        }
+
+        public IConfiguration Conficurated()
+        {
+           return new ConfigurationBuilder()
+                .SetBasePath(@"I:\Settings")
+                .AddJsonFile("LogHelper.json")
+                .Build();
         }
     }
 }
